@@ -106,18 +106,6 @@ function checkCollisions(spaceship, asteroids){
     //bullet collisions
     //YOUR CODE HERE (3-4 lines approx)
 
-  var bulletLen = spaceship.bulletSys.bullets.length;
-
-    // for (var i = 0; i < asteroids.locations.length; i++) {
-    //   for (var j = 0; j < spaceship.bulletSys.bullets.length; j++) {
-    //     if (isInside(spaceship.bulletSys.bullets[j], spaceship.bulletSys.diam / 2,
-    //         asteroidsLoc[i], asteroidsDiams[i] / 2) === true) {
-    //       asteroids.destroy(i);
-    //       break;
-    //     }
-    //   }
-    // }
-
   for (var i = 0; i < spaceship.bulletSys.bullets.length; i++) {
     for (var j = 0; j < asteroids.locations.length; j++) {
       if (isInside(spaceship.bulletSys.bullets[i], spaceship.bulletSys.diam / 2,
