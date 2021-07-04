@@ -73,8 +73,5 @@ class Spaceship {
       this.friction.div(30);
       this.friction.mult(-1);
       this.applyForce(this.friction);
-
-
-
   }
 }

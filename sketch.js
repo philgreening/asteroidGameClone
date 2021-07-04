@@ -6,11 +6,21 @@ var earthLoc;
 var earthSize;
 var starLocs = [];
 
-var mouseCirc;
+var gameScore;
+var timeCounter;
+var levelCounter;
+
+var spawnRate;
+var roidSpeed;
 
 //////////////////////////////////////////////////
 function setup() {
   createCanvas(1200,800);
+  //timer interval set to 1 second
+  setInterval(timer, 1000);
+  //Level difficulty interval every 20 seconds
+  setInterval(increaseDifficulty, 20000);
+
   spaceship = new Spaceship();
   asteroids = new AsteroidSystem();
 
@@ -19,6 +29,13 @@ function setup() {
   atmosphereSize = new createVector(width*3, width*3);
   earthLoc = new createVector(width/2, height*3.1);
   earthSize = new createVector(width*3, width*3);
+
+  gameScore = 0;
+  timeCounter = 0;
+  levelCounter = 1;
+
+  spawnRate = 0.01;
+  roidSpeed = 0.1;
 }
 
 //////////////////////////////////////////////////
@@ -28,6 +45,12 @@ function draw() {
 
   spaceship.run();
   asteroids.run();
+
+  displayStats();
+
+  // score();
+  // time();
+  // level();
 
   drawEarth();
 
@@ -55,20 +78,10 @@ function checkCollisions(spaceship, asteroids){
   var asteroidsDiams = asteroids.diams;
   var shipSize = spaceship.size/2;
   var shipLoc = spaceship.location;
-  mouseCirc = new createVector(mouseX, mouseY);
 
 
   //spaceship-2-asteroid collisions
     //YOUR CODE HERE (2-3 lines approx)
-
-  fill(255,0,0);
-  ellipse(mouseCirc.x, mouseCirc.y, 30, 30)
-  for (var i = 0 ; i < len; i++) {
-    if (isInside(asteroidsLoc[i], asteroidsDiams[i]/2,
-        mouseCirc, 30) === true) {
-      console.log(true);
-    }
-  }
 
   for (var i = 0; i < len; i++){
     if (isInside(shipLoc, shipSize,
@@ -100,7 +113,6 @@ function checkCollisions(spaceship, asteroids){
   if (isInside(shipLoc, shipSize,
       atmosphereLoc, atmosphereSize.x/2) === true){
     spaceship.setNearEarth();
-    console.log(true);
   }
 
     //bullet collisions
@@ -112,11 +124,10 @@ function checkCollisions(spaceship, asteroids){
           asteroidsLoc[j], asteroidsDiams[j] / 2) === true) {
         asteroids.destroy(j);
         j--;
-        console.log(j);
+        gameScore ++;
       }
     }
   }
-
 }
 
 //////////////////////////////////////////////////
@@ -164,3 +175,30 @@ function sky(){
   if (random(1)<0.3) starLocs.splice(int(random(starLocs.length)),1);
   pop();
 }
+
+//increases the timer every second
+function timer(){
+  if (timeCounter >= 0)
+  {
+    timeCounter ++;
+  }
+}
+
+//increases the asteroid spawn rate and speed and level counter every 20 seconds
+function increaseDifficulty(){
+  spawnRate += 0.01;
+  roidSpeed += 0.1;
+  levelCounter ++;
+}
+
+//draws the timer, amount of asteroids destroyed and level to screen
+function displayStats(){
+  fill (255);
+  noStroke();
+  textSize(25);
+  text("Score: " + gameScore, 20, 50);
+  text("Time: " + timeCounter, 20, 80);
+  text("Level: " + levelCounter, width - 120, 50);
+}
+
+

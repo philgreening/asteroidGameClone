@@ -22,7 +22,6 @@ class BulletSystem {
     for (var i=0; i<this.bullets.length; i++){
       ellipse(this.bullets[i].x, this.bullets[i].y, this.diam, this.diam);
     }
-    //console.log(this.bullets.length);
   }
 
   //updates the location of all bullets
@@ -37,10 +36,10 @@ class BulletSystem {
       // YOUR CODE HERE (3 lines approx)
     for (var i = 0; i < this.bullets.length; i++){
       if (this.bullets[i].x > width || this.bullets[i].x < 0 ||
-          this.bullets[i].y > height || this.bullets[i].y < 0 ){
+          this.bullets[i].y > height || this.bullets[i].y < 0 )
+      {
         this.bullets.splice(i,1);
         i--;
-        console.log(this.bullets.length + " bullets")
       }
     }
   }
